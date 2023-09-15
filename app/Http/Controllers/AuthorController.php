@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
+
 use App\Models\Author;
 use Illuminate\Http\Request;
 
@@ -11,10 +11,16 @@ class AuthorController extends Controller
         $authors = Author::with('books')->get();
         return inertia('Authors', ['authors' => $authors]);
     }
-    
+
     public function show($id)
     {
         $author = Author::with('books')->find($id);
         return inertia('Author', ['author' => $author]);
+    }
+
+    public function allAuthors()
+    {
+        $authors = Author::all();
+        return response()->json(['authors' => $authors]);
     }
 }

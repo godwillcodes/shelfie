@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +9,13 @@ class Book extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['isbn', 'name'];
+
+    /**
      * The authors that belong to the book.
      */
     public function authors()
@@ -17,4 +23,3 @@ class Book extends Model
         return $this->belongsToMany(Author::class, 'author_book');
     }
 }
-

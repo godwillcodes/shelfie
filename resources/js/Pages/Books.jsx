@@ -1,11 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head } from '@inertiajs/react'
+import { Link } from '@inertiajs/react'
+import NavLink from '@/Components/NavLink'
 
 export default function Books({ auth, books }) {
   // Log the books data to the console
   console.log(books)
   return (
-    <AuthenticatedLayout user={auth.user} header={<h2 className="dark:text-gray-200 text-gray-800 text-xl font-semibold leading-tight">Books Dashboard  🚀</h2>}>
+    <AuthenticatedLayout user={auth.user} header={<h2 className="dark:text-gray-200 text-gray-800 text-xl font-semibold leading-tight">Books Dashboard 🚀</h2>}>
       <Head title="Books Dashboard" />
 
       <div className="py-12">
@@ -17,9 +19,9 @@ export default function Books({ auth, books }) {
                 <p className="mt-2 text-white text-sm">A list of all the books in your account including their name, ISBN, and Author</p>
               </div>
               <div className="mt-4 sm:flex-none sm:ml-16 sm:mt-0">
-                <button type="button" className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 block px-3 py-2 text-center text-white text-sm font-semibold hover:bg-indigo-500 bg-orange-500 rounded-md shadow-sm">
-                  Add Book
-                </button>
+                <Link className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 block px-3 py-2 text-center text-white text-sm font-semibold hover:bg-orange-500 bg-orange-500 rounded-md shadow-sm" href={route('addbook')}>
+                  Add Books
+                </Link>
               </div>
             </div>
             <div className="flow-root mt-8">
