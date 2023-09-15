@@ -16,7 +16,7 @@ class DashboardController extends Controller
             'books' => Book::count(),
             'users' => User::count(),
         ];
-
         return inertia('Dashboard', ['data' => $data]);
     }
 }
+
