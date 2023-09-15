@@ -8,8 +8,8 @@ class BookController extends Controller
 {
     public function index()
     {
-        //return all books to inertia
-        $books = Book::all();
+        $books = Book::with('authors')->get();
+        
         return inertia('Books', ['books' => $books]);
     }
     

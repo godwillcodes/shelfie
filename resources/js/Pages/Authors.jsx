@@ -1,24 +1,24 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head } from '@inertiajs/react'
 
-export default function Books({ auth, books }) {
+export default function Authors({ auth, authors }) {
   // Log the books data to the console
-  console.log(books)
+  console.log(authors)
   return (
     <AuthenticatedLayout user={auth.user} header={<h2 className="dark:text-gray-200 text-gray-800 text-xl font-semibold leading-tight">Books Dashboard ❤️</h2>}>
-      <Head title="Books Dashboard" />
+      <Head title="Authors Dashboard" />
 
       <div className="py-12">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
               <div className="sm:flex-auto">
-                <h1 className="text-white text-base font-semibold leading-6">Books</h1>
-                <p className="mt-2 text-white text-sm">A list of all the books in your account including their name, ISBN, and Author</p>
+                <h1 className="text-white text-base font-semibold leading-6">Authors</h1>
+                <p className="mt-2 text-white text-sm">A list of all the Authors in your account including their name, books</p>
               </div>
               <div className="mt-4 sm:flex-none sm:ml-16 sm:mt-0">
                 <button type="button" className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 block px-3 py-2 text-center text-white text-sm font-semibold hover:bg-indigo-500 bg-orange-500 rounded-md shadow-sm">
-                  Add Book
+                  Add Author
                 </button>
               </div>
             </div>
@@ -36,11 +36,9 @@ export default function Books({ auth, books }) {
                             Name
                           </th>
                           <th scope="col" className="px-3 py-3.5 text-left text-white text-sm font-semibold">
-                            ISBN
+                            Books
                           </th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-white text-sm font-semibold">
-                            Author
-                          </th>
+                         
                           <th scope="col" className="relative pl-3 pr-4 py-3.5 sm:pr-6">
                             <span className="sr-only">View</span>
                           </th>
@@ -51,25 +49,32 @@ export default function Books({ auth, books }) {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-gray-200 divide-y">
-                        {books.map((book) => (
-                          <tr key={book.id}>
-                            <td className="pl-4 pr-3 py-4 text-gray-900 whitespace-nowrap text-sm font-medium sm:pl-6">{book.id}</td>
-                            <td className="pl-4 pr-3 py-4 text-gray-900 whitespace-nowrap text-sm font-medium sm:pl-6">{book.name}</td>
-                            <td className="px-3 py-4 text-gray-900 whitespace-nowrap text-sm">{book.isbn}</td>
+                        {authors.map((author) => (
+                          <tr key={author.id}>
+                            <td className="pl-4 pr-3 py-4 text-gray-900 whitespace-nowrap text-sm font-medium sm:pl-6">{author.id}</td>
+                            <td className="pl-4 pr-3 py-4 text-gray-900 whitespace-nowrap text-sm font-medium sm:pl-6">{author.name}</td>
+                            {/* <td className="px-3 py-4 text-gray-900 whitespace-nowrap text-sm">{book.isbn}</td> */}
                             <td className="px-3 py-4 text-gray-900 whitespace-nowrap text-sm">
-                              {book.authors.map((author) => (
-                                <span key={author.id}>{author.name}</span>
-                              ))}
-                            </td>
+      <ul>
+        {author.books.map((book) => (
+          <li key={book.id}>
+            <strong>Title:</strong> {book.name} <strong> whose code </strong> is {book.isbn}<br /><br />
+            
+            
+            {/* Add more book details here as needed */}
+          </li>
+        ))}
+      </ul>
+    </td>
                             <td className="relative pl-3 pr-4 py-4 text-right whitespace-nowrap text-sm font-medium sm:pr-6">
                               <a href="#" className="text-orange-600 hover:text-orange-900">
-                                View<span className="sr-only">, {book.name}</span>
+                                View<span className="sr-only">, {author.name}</span>
                               </a>
                             </td>
 
                             <td className="relative pl-3 pr-4 py-4 text-right whitespace-nowrap text-sm font-medium sm:pr-6">
                               <a href="#" className="text-orange-600 hover:text-orange-900">
-                                Edit<span className="sr-only">, {book.name}</span>
+                                Edit<span className="sr-only">, {author.name}</span>
                               </a>
                             </td>
                           </tr>
