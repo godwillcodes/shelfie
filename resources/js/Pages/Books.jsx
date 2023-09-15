@@ -5,7 +5,7 @@ export default function Books({ auth, books }) {
   // Log the books data to the console
   console.log(books)
   return (
-    <AuthenticatedLayout user={auth.user} header={<h2 className="dark:text-gray-200 text-gray-800 text-xl font-semibold leading-tight">Books Dashboard ❤️</h2>}>
+    <AuthenticatedLayout user={auth.user} header={<h2 className="dark:text-gray-200 text-gray-800 text-xl font-semibold leading-tight">Books Dashboard  🚀</h2>}>
       <Head title="Books Dashboard" />
 
       <div className="py-12">

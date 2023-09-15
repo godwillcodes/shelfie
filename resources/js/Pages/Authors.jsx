@@ -5,7 +5,7 @@ export default function Authors({ auth, authors }) {
   // Log the books data to the console
   console.log(authors)
   return (
-    <AuthenticatedLayout user={auth.user} header={<h2 className="dark:text-gray-200 text-gray-800 text-xl font-semibold leading-tight">Books Dashboard ❤️</h2>}>
+    <AuthenticatedLayout user={auth.user} header={<h2 className="dark:text-gray-200 text-gray-800 text-xl font-semibold leading-tight">Authors Dashboard 🔥</h2>}>
       <Head title="Authors Dashboard" />
 
       <div className="py-12">
@@ -38,7 +38,7 @@ export default function Authors({ auth, authors }) {
                           <th scope="col" className="px-3 py-3.5 text-left text-white text-sm font-semibold">
                             Books
                           </th>
-                         
+
                           <th scope="col" className="relative pl-3 pr-4 py-3.5 sm:pr-6">
                             <span className="sr-only">View</span>
                           </th>
@@ -55,17 +55,17 @@ export default function Authors({ auth, authors }) {
                             <td className="pl-4 pr-3 py-4 text-gray-900 whitespace-nowrap text-sm font-medium sm:pl-6">{author.name}</td>
                             {/* <td className="px-3 py-4 text-gray-900 whitespace-nowrap text-sm">{book.isbn}</td> */}
                             <td className="px-3 py-4 text-gray-900 whitespace-nowrap text-sm">
-      <ul>
-        {author.books.map((book) => (
-          <li key={book.id}>
-            <strong>Title:</strong> {book.name} <strong> whose code </strong> is {book.isbn}<br /><br />
-            
-            
-            {/* Add more book details here as needed */}
-          </li>
-        ))}
-      </ul>
-    </td>
+                              <ul>
+                                {author.books.map((book) => (
+                                  <li key={book.id}>
+                                    <strong>{book.name} </strong> whose code is <strong>{book.isbn} </strong>
+                                    <br />
+                                    <br />
+                                    {/* Add more book details here as needed */}
+                                  </li>
+                                ))}
+                              </ul>
+                            </td>
                             <td className="relative pl-3 pr-4 py-4 text-right whitespace-nowrap text-sm font-medium sm:pr-6">
                               <a href="#" className="text-orange-600 hover:text-orange-900">
                                 View<span className="sr-only">, {author.name}</span>
