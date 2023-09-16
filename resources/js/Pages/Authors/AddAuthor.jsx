@@ -44,14 +44,14 @@ export default function Authors({ auth }) {
       <Head title="Author Dashboard" />
 
       <div className="py-12">
-        <div className="mx-auto max-w-6xl sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl sm:px-6 lg:px-8">
           <form className="space-y-12" onSubmit={submit}>
             <div>
               <label htmlFor="name" className="block text-white text-sm font-medium leading-6">
                 Author's Name
               </label>
               <input type="text" id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="bg-white/5 ring-white/10 block py-1.5 w-full text-white border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
-              {errors.name && <div>{errors.name}</div>}
+              {errors.name && <div className="text-red-600 capitalize	">{errors.name}</div>}
             </div>
 
             <div>
@@ -72,7 +72,7 @@ export default function Authors({ auth }) {
                 )}
               </select>
 
-              {errors.book_id && <div>{errors.book_id}</div>}
+              {errors.book_id && <div className="text-red-600 capitalize">{errors.book_id}</div>}
             </div>
 
             {/* Submit button */}

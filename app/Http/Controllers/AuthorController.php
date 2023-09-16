@@ -30,23 +30,31 @@ class AuthorController extends Controller
         $request->validate([
             'name' => 'required|string',
         ]);
-
+    
         // Log the received data
         \Log::info('Received Data from Inertia:', [
             'name' => $request->input('name'),
             'book_id' => $request->input('book_id'),
         ]);
-
-        // Create a new author with the provided data 
+    
+        // Create a new author with the provided data
         $author = new Author([
             'name' => $request->input('name'),
         ]);
-
-        // Associate the author with the selected book
-        $book = Book::find($request->input('book_id'));
-        $book->authors()->save($author);
-
+    
+        // Save the author
+        $author->save();
+    
+        // If a book ID is selected, associate the author with the book
+        if ($request->input('book_id')) {
+            $book = Book::find($request->input('book_id'));
+            $book->authors()->attach($author->id);
+        }
+    
         // Redirect back to the authors list or a success page
         return redirect()->route('authors');
     }
+    
+    
+
 }

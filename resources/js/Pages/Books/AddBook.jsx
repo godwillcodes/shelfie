@@ -45,14 +45,14 @@ export default function Books({ auth }) {
       <Head title="Books Dashboard" />
 
       <div className="py-12">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl sm:px-6 lg:px-8">
           <form className="space-y-12" onSubmit={submit}>
             <div>
               <label htmlFor="name" className="block text-white text-sm font-medium leading-6">
                 Name
               </label>
               <input type="text" id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="bg-white/5 ring-white/10 block py-1.5 w-full text-white border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
-              {errors.name && <div>{errors.name}</div>}
+              {errors.name && <div className="text-red-600">{errors.name}</div>}
             </div>
 
             <div>
@@ -60,7 +60,7 @@ export default function Books({ auth }) {
                 ISBN
               </label>
               <input type="text" id="isbn" value={data.isbn} onChange={(e) => setData('isbn', e.target.value)} className="bg-white/5 ring-white/10 block py-1.5 w-full text-white border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
-              {errors.isbn && <div>{errors.isbn}</div>}
+              {errors.isbn && <div className="text-red-600">{errors.isbn}</div>}
             </div>
 
             <div>
@@ -76,7 +76,7 @@ export default function Books({ auth }) {
                   </option>
                 ))}
               </select>
-              {errors.author_id && <div>{errors.author_id}</div>}
+              {errors.author_id && <div className="text-red-600">{errors.author_id}</div>}
             </div>
 
             {/* Submit button */}
