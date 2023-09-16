@@ -2,36 +2,45 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head } from '@inertiajs/react'
 import { useForm } from '@inertiajs/react'
 import { useEffect, useState } from 'react'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
+
+
+const animatedComponents = makeAnimated();
 
 export default function Authors({ auth }) {
   const { data, setData, post, processing, errors } = useForm({
     name: '',
-    book_id: '',
+    book_ids: [],
   })
 
   // Define state to store authors
-  const [book, setBooks] = useState([])
+  const [bookOptions, setBookOptions] = useState([])
 
+  // Fetch authors when the component mounts
   // Fetch authors when the component mounts
   useEffect(() => {
     // Make an API call to fetch authors
     fetch('/list-books') // Replace with your actual API endpoint
       .then((response) => response.json())
       .then((data) => {
-        setBooks(data.books)
+        setBookOptions(data.books.map((book) => ({ value: book.id, label: book.name })))
       })
       .catch((error) => {
         console.error('Error fetching books:', error)
       })
-  }, []) // The empty dependency array ensures this effect runs once on component mount
+  }, [])
 
   // Define the submit function
   function submit(e) {
     e.preventDefault()
     console.log('Form Data:', data)
 
-    // Post the form data to the server
     post('/add-author', {
+      body: JSON.stringify({
+        name: data.name,
+        book_ids: data.book_ids,
+      }),
       onSuccess: () => {
         // Handle a successful form submission if needed
         console.log('Form submitted successfully')
@@ -50,8 +59,8 @@ export default function Authors({ auth }) {
               <label htmlFor="name" className="block text-white text-sm font-medium leading-6">
                 Author's Name
               </label>
-              <input type="text" id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="bg-white/5 ring-white/10 block py-1.5 w-full text-white border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
-              {errors.name && <div className="text-red-600 capitalize	">{errors.name}</div>}
+              <input type="text" id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="bg-white ring-white/10 block py-1.5 w-full text-neutral-950 border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6" />
+              {errors.name && <div className="text-red-600 capitalize">{errors.name}</div>}
             </div>
 
             <div>
@@ -59,20 +68,21 @@ export default function Authors({ auth }) {
               <label htmlFor="book_id" className="block text-white text-sm font-medium leading-6">
                 Select Book
               </label>
-              <select id="book_id" value={data.book_id} onChange={(e) => setData('book_id', e.target.value)} className="bg-white/5 ring-white/10 block py-1.5 w-full text-white border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                <option value="">Select a book</option>
-                {book.map(
-                  (
-                    book, // Change 'books' to 'book' here
-                  ) => (
-                    <option key={book.id} value={book.id}>
-                      {book.name}
-                    </option>
-                  ),
-                )}
-              </select>
+              <Select
+                isMulti
+                options={bookOptions}
+                closeMenuOnSelect={false}
+      components={animatedComponents}
+                value={bookOptions.filter((option) => data.book_ids.includes(option.value))}
+                onChange={(selectedOptions) => {
+                  // Extract an array of selected values
+                  const selectedValues = selectedOptions.map((option) => option.value)
+                  setData('book_ids', selectedValues)
+                }}
+                className="text-neutral-950 w-full border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-white-500 sm:text-sm sm:leading-6"
+              />
 
-              {errors.book_id && <div className="text-red-600 capitalize">{errors.book_id}</div>}
+              {errors.book_ids && <div className="text-red-600 capitalize">{errors.book_ids}</div>}
             </div>
 
             {/* Submit button */}

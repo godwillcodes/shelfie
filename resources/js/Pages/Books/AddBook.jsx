@@ -2,16 +2,20 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head } from '@inertiajs/react'
 import { useForm } from '@inertiajs/react'
 import { useEffect, useState } from 'react'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated'
+
+const animatedComponents = makeAnimated()
 
 export default function Books({ auth }) {
   const { data, setData, post, processing, errors } = useForm({
     name: '',
     isbn: '',
-    author_id: '',
+    author_id: [],
   })
 
   // Define state to store authors
-  const [authors, setAuthors] = useState([])
+  const [authorsOptions, setAuthorsOptions] = useState([])
 
   // Fetch authors when the component mounts
   useEffect(() => {
@@ -19,7 +23,7 @@ export default function Books({ auth }) {
     fetch('/list-authors') // Replace with your actual API endpoint
       .then((response) => response.json())
       .then((data) => {
-        setAuthors(data.authors)
+        setAuthorsOptions(data.authors.map((author) => ({ value: author.id, label: author.name })))
       })
       .catch((error) => {
         console.error('Error fetching authors:', error)
@@ -33,6 +37,11 @@ export default function Books({ auth }) {
 
     // Post the form data to the server
     post('/add-book', {
+      body: JSON.stringify({
+        name: data.name,
+        isbn: data.isbn,
+        author_id: data.author_id,
+      }),
       onSuccess: () => {
         // Handle a successful form submission if needed
         console.log('Form submitted successfully')
@@ -51,16 +60,16 @@ export default function Books({ auth }) {
               <label htmlFor="name" className="block text-white text-sm font-medium leading-6">
                 Name
               </label>
-              <input type="text" id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="bg-white/5 ring-white/10 block py-1.5 w-full text-white border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
-              {errors.name && <div className="text-red-600">{errors.name}</div>}
+              <input type="text" id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="bg-white ring-white/10 block py-1.5 w-full text-dark border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6" />
+              {errors.name && <div>{errors.name}</div>}
             </div>
 
             <div>
               <label htmlFor="isbn" className="block text-white text-sm font-medium leading-6">
                 ISBN
               </label>
-              <input type="text" id="isbn" value={data.isbn} onChange={(e) => setData('isbn', e.target.value)} className="bg-white/5 ring-white/10 block py-1.5 w-full text-white border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
-              {errors.isbn && <div className="text-red-600">{errors.isbn}</div>}
+              <input type="text" id="isbn" value={data.isbn} onChange={(e) => setData('isbn', e.target.value)} className="bg-white ring-white/10 block py-1.5 w-full text-dark border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6" />
+              {errors.isbn && <div>{errors.isbn}</div>}
             </div>
 
             <div>
@@ -68,15 +77,22 @@ export default function Books({ auth }) {
               <label htmlFor="author_id" className="block text-white text-sm font-medium leading-6">
                 Author
               </label>
-              <select id="author_id" value={data.author_id} onChange={(e) => setData('author_id', e.target.value)} className="bg-white/5 ring-white/10 block py-1.5 w-full text-white border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                <option value="">Select an author</option>
-                {authors.map((author) => (
-                  <option key={author.id} value={author.id}>
-                    {author.name}
-                  </option>
-                ))}
-              </select>
-              {errors.author_id && <div className="text-red-600">{errors.author_id}</div>}
+              {/* select from react */}
+              <Select
+                isMulti
+                options={authorsOptions}
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                value={authorsOptions.filter((option) => data.author_id.includes(option.value))}
+                onChange={(selectedOptions) => {
+                  // Extract an array of selected values
+                  const selectedValues = selectedOptions.map((option) => option.value)
+                  setData('author_id', selectedValues)
+                }}
+                className="w-full text-nuetral-950 border-0 rounded-md shadow-sm ring-1 focus:ring-2 ring-inset focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              />
+
+              {errors.author_id && <div>{errors.author_id}</div>}
             </div>
 
             {/* Submit button */}

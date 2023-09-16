@@ -59,10 +59,13 @@ export default function Books({ auth, books }) {
                             <td className="pl-4 pr-3 py-4 text-gray-900 whitespace-nowrap text-sm font-medium sm:pl-6">{book.name}</td>
                             <td className="px-3 py-4 text-gray-900 whitespace-nowrap text-sm">{book.isbn}</td>
                             <td className="px-3 py-4 text-gray-900 whitespace-nowrap text-sm">
-                              {book.authors.map((author) => (
-                                <span key={author.id}>{author.name}</span>
-                              ))}
+                              <ul>
+                                {book.authors.map((author) => (
+                                  <li key={author.id}>{author.name}</li>
+                                ))}
+                              </ul>
                             </td>
+
                             <td className="relative pl-3 pr-4 py-4 text-right whitespace-nowrap text-sm font-medium sm:pr-6">
                               <a href="#" className="text-orange-600 hover:text-orange-900">
                                 View<span className="sr-only">, {book.name}</span>

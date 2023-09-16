@@ -29,12 +29,13 @@ class AuthorController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
+            'book_ids' => 'array', // Ensure 'book_ids' is an array
         ]);
     
         // Log the received data
         \Log::info('Received Data from Inertia:', [
             'name' => $request->input('name'),
-            'book_id' => $request->input('book_id'),
+            'book_ids' => $request->input('book_ids'),
         ]);
     
         // Create a new author with the provided data
@@ -45,15 +46,20 @@ class AuthorController extends Controller
         // Save the author
         $author->save();
     
-        // If a book ID is selected, associate the author with the book
-        if ($request->input('book_id')) {
-            $book = Book::find($request->input('book_id'));
-            $book->authors()->attach($author->id);
+        // If book IDs are selected, associate the author with each book
+        if ($request->input('book_ids')) {
+            foreach ($request->input('book_ids') as $bookId) {
+                $book = Book::find($bookId);
+                if ($book) {
+                    $book->authors()->attach($author->id);
+                }
+            }
         }
     
         // Redirect back to the authors list or a success page
         return redirect()->route('authors');
     }
+    
     
     
 
