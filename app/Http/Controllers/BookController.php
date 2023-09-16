@@ -15,6 +15,12 @@ class BookController extends Controller
         return inertia('Books', ['books' => $books, 'authors' => $authors]);
     }
 
+    public function allBooks()
+    {
+        $books = Book::all();
+        return response()->json(['books' => $books]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

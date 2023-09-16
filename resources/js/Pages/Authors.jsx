@@ -1,5 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head } from '@inertiajs/react'
+import { Link } from '@inertiajs/react'
 
 export default function Authors({ auth, authors }) {
   // Log the books data to the console
@@ -17,9 +18,9 @@ export default function Authors({ auth, authors }) {
                 <p className="mt-2 text-white text-sm">A list of all the Authors in your account including their name, books</p>
               </div>
               <div className="mt-4 sm:flex-none sm:ml-16 sm:mt-0">
-                <button type="button" className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 block px-3 py-2 text-center text-white text-sm font-semibold hover:bg-indigo-500 bg-orange-500 rounded-md shadow-sm">
+                <Link className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 block px-3 py-2 text-center text-white text-sm font-semibold hover:bg-orange-500 bg-orange-500 rounded-md shadow-sm" href={route('addauthor')}>
                   Add Author
-                </button>
+                </Link>
               </div>
             </div>
             <div className="flow-root mt-8">
