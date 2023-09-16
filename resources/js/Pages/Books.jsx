@@ -67,10 +67,16 @@ export default function Books({ auth, books }) {
                             </td>
 
                             <td className="relative pl-3 pr-4 py-4 text-right whitespace-nowrap text-sm font-medium sm:pr-6">
-                              <a href="#" className="text-orange-600 hover:text-orange-900">
+                              {/* <a href="#" className="text-orange-600 hover:text-orange-900">
                                 View<span className="sr-only">, {book.name}</span>
                               </a>
+                               make this a link to a single page depending on ID
+                              */}
+                              <Link href={route('viewbook', book.id)} className="text-orange-600 hover:text-orange-900">
+                                View<span className="sr-only">, {book.name}</span>
+                              </Link>
                             </td>
+
 
                             <td className="relative pl-3 pr-4 py-4 text-right whitespace-nowrap text-sm font-medium sm:pr-6">
                               <a href="#" className="text-orange-600 hover:text-orange-900">

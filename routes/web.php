@@ -52,6 +52,9 @@ Route::get('/add-author', function () {
     return Inertia::render('Authors/AddAuthor');
 })->middleware(['auth', 'verified'])->name('addauthor');
 
+
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -66,6 +69,8 @@ Route::get('/list-authors', [AuthorController::class, 'allAuthors'])->name('alla
 Route::post('/add-book', [BookController::class, 'store'])->name('addbook');
 Route::post('/add-author', [AuthorController::class, 'store'])->name('addauthor');
 Route::get('/list-books', [BookController::class, 'allBooks'])->name('allbooks');
+Route::get('/view-book/{id}', [BookController::class, 'show'])->name('viewbook');
+Route::get('/view-author/{id}', [AuthorController::class, 'show'])->name('viewauthor');
 
 
 require __DIR__.'/auth.php';

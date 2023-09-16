@@ -16,7 +16,7 @@ class AuthorController extends Controller
     public function show($id)
     {
         $author = Author::with('books')->find($id);
-        return inertia('Author', ['author' => $author]);
+        return inertia('Authors/ViewAuthor', ['author' => $author]);
     }
 
     public function allAuthors()
@@ -59,8 +59,6 @@ class AuthorController extends Controller
         // Redirect back to the authors list or a success page
         return redirect()->route('authors');
     }
-    
-    
     
 
 }

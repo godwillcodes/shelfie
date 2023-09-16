@@ -58,6 +58,20 @@ class BookController extends Controller
         // Redirect back to the books list or a success page
         return redirect()->route('books');
     }
+
+    //show single book details Inertia, depending on the id
+    public function show($id)
+    {
+        $book = Book::with('authors')->find($id);
+        // log
+        \Log::info('Received Data from Inertia:', [
+            'name' => $book->name,
+            'isbn' => $book->isbn,
+            'author_id' => $book->author_id,
+        ]);
+        return inertia('Books/ViewBook', ['book' => $book]);
+    }   
+    
     
     
 }

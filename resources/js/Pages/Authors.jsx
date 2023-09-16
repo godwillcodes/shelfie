@@ -68,9 +68,9 @@ export default function Authors({ auth, authors }) {
                               </ul>
                             </td>
                             <td className="relative pl-3 pr-4 py-4 text-right whitespace-nowrap text-sm font-medium sm:pr-6">
-                              <a href="#" className="text-orange-600 hover:text-orange-900">
-                                View<span className="sr-only">, {author.name}</span>
-                              </a>
+                            <Link href={route('viewauthor', author.id)} className="text-orange-600 hover:text-orange-500">
+                                View <span className="sr-only">, {author.name}</span>
+                              </Link>
                             </td>
 
                             <td className="relative pl-3 pr-4 py-4 text-right whitespace-nowrap text-sm font-medium sm:pr-6">
