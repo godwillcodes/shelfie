@@ -79,9 +79,9 @@ export default function Books({ auth, books }) {
 
 
                             <td className="relative pl-3 pr-4 py-4 text-right whitespace-nowrap text-sm font-medium sm:pr-6">
-                              <a href="#" className="text-orange-600 hover:text-orange-900">
+                            <Link href={route('updatebook', book.id)} className="text-orange-600 hover:text-orange-900">
                                 Edit<span className="sr-only">, {book.name}</span>
-                              </a>
+                              </Link>
                             </td>
                           </tr>
                         ))}

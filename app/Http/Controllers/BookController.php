@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+
 
 class BookController extends Controller
 {
@@ -70,7 +72,63 @@ class BookController extends Controller
             'author_id' => $book->author_id,
         ]);
         return inertia('Books/ViewBook', ['book' => $book]);
-    }   
+    }
+    
+    public function test($id)
+    {
+        $book = Book::with('authors')->find($id);
+        $bookData = [
+            'id' => $book->id,
+            'name' => $book->name,
+            'isbn' => $book->isbn,
+            'author_ids' => $book->authors->pluck('id')->toArray(), // Get author IDs
+
+        ];
+        return inertia('Books/EditBook', ['initialBookData' => $bookData]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'isbn' => 'required|string',
+            'author_ids' => 'array', // Ensure 'author_ids' is an array
+        ]);
+
+        // Log the received data
+        \Log::info('Received Data from Inertia:', [
+            'name' => $request->input('name'),
+            'id' => $id,
+            'isbn' => $request->input('isbn'),
+            'author_ids' => $request->input('author_ids'),
+        ]);
+    
+        // Find the book
+        $book = Book::find($id);
+    
+        if (!$book) {
+            // Handle the case where the book is not found (e.g., return a 404 response)
+            return response()->json(['message' => 'Book not found'], 404);
+        }
+    
+        // Update the book with the provided data
+        $book->name = $request->input('name');
+        $book->isbn = $request->input('isbn');
+    
+        // Save the book
+        $book->save();
+    
+        // Sync the book's authors with the selected authors
+        if ($request->input('author_ids')) {
+            $book->authors()->sync($request->input('author_ids'));
+        } else {
+            $book->authors()->sync([]);
+        }
+    
+        // Redirect back to the books list or a success page
+        return redirect()->route('books');
+    }
+    
     
     
     
