@@ -14,7 +14,7 @@ class AuthorController extends Controller
         $authors = Author::with('books')->get();
         return inertia('Authors', ['authors' => $authors]);
     }
-
+    
     public function show($id)
     {
         $author = Author::with('books')->find($id);

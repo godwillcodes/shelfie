@@ -8,7 +8,6 @@ export default function Authors({ auth, authors }) {
   return (
     <AuthenticatedLayout user={auth.user} header={<h2 className="dark:text-gray-200 text-gray-800 text-xl font-semibold leading-tight">Authors Dashboard 🔥</h2>}>
       <Head title="Authors Dashboard" />
-
       <div className="py-12">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="px-4 sm:px-6 lg:px-8">

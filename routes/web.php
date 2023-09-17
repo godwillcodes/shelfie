@@ -4,6 +4,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\ActivityController;
+use Spatie\Activitylog\Models\Activity;
+use App\Models\User;
+
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +46,14 @@ Route::get('/authors', function () {
     return Inertia::render('Authors');
 })->middleware(['auth', 'verified'])->name('authors');
 
+Route::get('/activity-log', function () {
+    // Fetch the activity logs data from the database
+    $activityLogs = Activity::with('causer')->get();
+        $users = User::all();
+        // Pass the activityLogs and users data to the 'ActivityLog' component
+        return inertia('ActivityLog', ['activityLogs' => $activityLogs, 'users' => $users]);
+})->middleware(['auth', 'verified'])->name('ActivityLog');
+
 //route for adding books
 Route::get('/add-book', function () {
     return Inertia::render('Books/AddBook');
@@ -77,6 +89,7 @@ Route::put('/update-author-deets/{id}', [AuthorController::class, 'update'])->na
 //update book endpoints
 Route::get('/update-book/{id}', [BookController::class, 'test'])->name('updatebook');
 Route::put('/update-book-deets/{id}', [BookController::class, 'update'])->name('updatebookdeets');
-
+//get activity logs
+Route::get('/activity-logss', [ActivityController::class, 'getAllLogs'])->name('activitylogs');
 
 require __DIR__.'/auth.php';
