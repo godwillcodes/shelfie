@@ -41,7 +41,7 @@ export default function ViewBook({ auth }) {
                           </div>
                         </div>
                         <div className="flex-shrink-0 ml-4">
-                        <Link href={route('viewauthor', author.id)} className="text-orange-600 hover:text-orange-500">
+                        <Link href={route('updateauthor', author.id)} className="text-orange-600 hover:text-orange-500">
                                 View Author<span className="sr-only">, {author.name}</span>
                               </Link>
                         </div>

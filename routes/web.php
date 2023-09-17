@@ -71,6 +71,8 @@ Route::post('/add-author', [AuthorController::class, 'store'])->name('addauthor'
 Route::get('/list-books', [BookController::class, 'allBooks'])->name('allbooks');
 Route::get('/view-book/{id}', [BookController::class, 'show'])->name('viewbook');
 Route::get('/view-author/{id}', [AuthorController::class, 'show'])->name('viewauthor');
+Route::get('/update-author/{id}', [AuthorController::class, 'test'])->name('updateauthor');
+Route::put('/update-author-deets/{id}', [AuthorController::class, 'update'])->name('updateauthordeets');
 
 
 require __DIR__.'/auth.php';
