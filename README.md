@@ -1,1 +1,2 @@
-more configs
+- more configs
+- relationships
